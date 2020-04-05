@@ -20,11 +20,11 @@ public class NotifierOptions {
         sharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 
-    public boolean getOptionState(){
+    public boolean getNotifierState(){
         return sharedPreferences.getBoolean(OPTION_NAME, false);
     }
 
-    public void saveOptionState(boolean state){
+    public void saveNotifierState(boolean state){
         sharedPreferences.edit().putBoolean(OPTION_NAME, state).apply();
     }
 

@@ -1,20 +1,18 @@
-package com.example.todoapplication;
+package com.example.recyclerview;
 
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.model.ToDoEvent;
+import com.example.todoapplication.R;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,37 +23,32 @@ import java.util.stream.Collectors;
 public class ToDoEventAdapter extends RecyclerView.Adapter<ToDoEventAdapter.MyViewHolder> {
     private final List<ToDoEvent> toDoEvents;
     private List<ToDoEvent> filtered; //filtered uzywany gdy wybiera sie przedzial czasowy zadan
-    private ItemClickListener onClickListener; //listener z mainactivity
+    private ItemClickListener itemClickListener; //listener z mainactivity
 
-    ToDoEventAdapter(ItemClickListener itemClickListener){
-        this.onClickListener = itemClickListener;
+    public ToDoEventAdapter(ItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
         this.toDoEvents = new ArrayList<>();
     }
 
-    void setTodos(List<ToDoEvent> todos){
+    public void setTodos(List<ToDoEvent> todos){
         toDoEvents.clear();
         toDoEvents.addAll(todos);
         notifyDataSetChanged();
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView description;
         private TextView dateStart;
         private TextView dateEnd;
-
+        private TextView deleteTask;
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.description = itemView.findViewById(R.id.opis);
-            this.dateStart = itemView.findViewById(R.id.datastart);
-            this.dateEnd = itemView.findViewById(R.id.datakoniec);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (onClickListener!=null) onClickListener.onItemClick(view, toDoEvents.get(getAdapterPosition()));
+            deleteTask = itemView.findViewById(R.id.deleteTask);
+            description = itemView.findViewById(R.id.opis);
+            dateStart = itemView.findViewById(R.id.datastart);
+            dateEnd = itemView.findViewById(R.id.datakoniec);
         }
     }
 
@@ -73,6 +66,7 @@ public class ToDoEventAdapter extends RecyclerView.Adapter<ToDoEventAdapter.MyVi
         holder.description.setText(toDoEvent.getOpis());
         holder.dateStart.setText("zaczęto: "+toDoEvent.getDatastart().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
         holder.dateEnd.setText("Koniec: "+toDoEvent.getDatakoniec().format(DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm")));
+        holder.deleteTask.setOnClickListener(view->itemClickListener.deleteItem(toDoEvent));
     }
 
     @Override
@@ -81,13 +75,10 @@ public class ToDoEventAdapter extends RecyclerView.Adapter<ToDoEventAdapter.MyVi
 
     }
 
-    public interface ItemClickListener{
-        void onItemClick(View view, ToDoEvent toDoEvent);
-    }
 
     @TargetApi(Build.VERSION_CODES.O)
     @RequiresApi(api = Build.VERSION_CODES.N)
-    void filterTodos(int days){
+    public void filterTodos(int days){
         filtered = toDoEvents
                 .stream()
                 .filter(toDoEvent -> toDoEvent.getDatakoniec().isBefore(LocalDateTime.now().plusDays(days)))
@@ -95,7 +86,7 @@ public class ToDoEventAdapter extends RecyclerView.Adapter<ToDoEventAdapter.MyVi
         notifyDataSetChanged();
     }
 
-    void deleteFilter(){
+    public void deleteFilter(){
         filtered = null;
         notifyDataSetChanged();
     }

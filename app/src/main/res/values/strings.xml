@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">ToDoApp</string>
-    <string name="title_activity_test">test</string>
-
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="set_notifier_option">Przypominaj co godzine o najbliższych zadaniach</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_to_do">ToDoActivity</string>
     <string name="title_activity_to_do_main">ToDoMain</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="days_all">Wszystko</string>
+    <string name="days_one">Do 24 godzin</string>
+    <string name="days_three">Do trzech dni</string>
+    <string name="days_week">Do tygodnia</string>
+    <string name="days_two_weeks">Do dwóch tygodni</string>
+    <string name="days_month">Do miesiąca</string>
+    <string name="delete_todo">Usuń</string>
 </resources>

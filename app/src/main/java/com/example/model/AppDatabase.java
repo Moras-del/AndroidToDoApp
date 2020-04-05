@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {ToDoEvent.class}, version = 1, exportSchema = false)
 @TypeConverters({Converter.class})
 public abstract class AppDatabase extends RoomDatabase {
+
     public abstract ToDoEventDao toDoEventDao();
 
     private static volatile AppDatabase dbInstance;

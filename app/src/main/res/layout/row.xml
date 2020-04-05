@@ -55,8 +55,8 @@
         android:layout_marginEnd="150dp"
         android:layout_marginRight="150dp"
         android:clickable="false"
-        android:text="Usuń"
-        android:visibility="invisible"
+        android:text="@string/delete_todo"
+        android:visibility="visible"
         app:fontFamily="sans-serif-medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

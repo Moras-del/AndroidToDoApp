@@ -1,7 +1,9 @@
 package com.example.todoapplication;
 
+import com.example.daysvalues.Days;
 import com.example.model.Converter;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -27,6 +29,14 @@ public class ExampleUnitTest {
     public void should_convert_localdatetime_to_string(){
         LocalDateTime currentTime = LocalDateTime.now();
         assertEquals(currentTime.toString(), Converter.fromLocalDateTimeToString(currentTime));
-
     }
+
+    @Test
+    public void should_get_enum(){
+        String text = "do trzech dni";
+        Days day = Days.fromString(text);
+        assertEquals(Days.THREE_DAYS, day);
+    }
+
+
 }

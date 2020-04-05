@@ -1,48 +1,43 @@
 package com.example.daysvalues;
 
+import android.app.Application;
+import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toMap;
+import com.example.todoapplication.R;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public enum Days {
 
-    ALL(0, "wszystko"),
-    DAY(1, "do 24 godzin"),
-    THREE_DAYS(3, "do trzech dni"),
-    WEEK(7, "do tygodnia"),
-    TWO_WEEKS(14, "do dwóch tygodni"),
-    MONTH(30,"do końca miesiąca");
+    ALL(0, R.string.days_all),
+    DAY(1, R.string.days_one),
+    THREE_DAYS(3, R.string.days_three),
+    WEEK(7, R.string.days_week),
+    TWO_WEEKS(14, R.string.days_two_weeks),
+    MONTH(30, R.string.days_month);
+
 
     private final int numOfDays;
-    private final String text;
+    private final int textReference;
 
-    Days(int numOfDays, String text) {
+    Days(int numOfDays, int textReference) {
         this.numOfDays = numOfDays;
-        this.text = text;
+        this.textReference = textReference;
     }
+
+    public static String[] getDays(Context context){
+        String[] texts = new String[values().length];
+        Days[] days = values();
+        for(int i = 0; i< days.length; i++)
+            texts[i] = context.getString(days[i].textReference);
+        return texts;
+    }
+
 
     public int getNumOfDays() {
         return numOfDays;
-    }
-
-    @Override
-    public String toString() {
-        return text;
-    }
-
-    private static final Map<String, Days> stringToEnum =
-            Stream.of(values()).collect(toMap(Object::toString, e->e));
-
-    public static Days fromString(String day){
-        return stringToEnum.get(day);
     }
 
 }
