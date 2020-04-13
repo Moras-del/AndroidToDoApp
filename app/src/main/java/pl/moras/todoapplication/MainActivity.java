@@ -1,4 +1,4 @@
-package com.example.todoapplication;
+package pl.moras.todoapplication;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,17 +20,18 @@ import android.view.View;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 
-import com.example.daysvalues.Days;
-import com.example.model.ToDoEvent;
-import com.example.notifier.NotifierOptions;
-import com.example.notifier.NotifierWorker;
-import com.example.recyclerview.ItemClickListener;
-import com.example.recyclerview.ToDoEventAdapter;
-import com.example.viewmodel.ToDoViewModel;
+import pl.moras.daysvalues.Days;
+import pl.moras.model.ToDoEvent;
+import pl.moras.notifier.NotifierOptions;
+import pl.moras.notifier.NotifierWorker;
+import pl.moras.recyclerview.ItemClickListener;
+import pl.moras.recyclerview.ToDoEventAdapter;
+
+
+import pl.moras.viewmodel.ToDoViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         toDoViewModel.getToDoEventList().observe(this, observer);
         toDoViewModel.deleteOldTodos();
 
-        customAdapter = new ToDoEventAdapter(itemClickListener);
+        customAdapter = new ToDoEventAdapter(itemClickListener, this);
         
         recyclerView =                       findViewById(R.id.recyclerView);
         Switch notifierSwitch =              findViewById(R.id.notifierswitch);
@@ -118,13 +119,12 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    ItemClickListener itemClickListener = (this::deleteTodo);
+    private ItemClickListener itemClickListener = (this::deleteTodo);
 
     private void deleteTodo(ToDoEvent toDoEventToDelete){ //alertdialog z zapytaniem o usuniecie zadania
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-        alertDialogBuilder.setTitle("Usunąć?");
-        alertDialogBuilder.setPositiveButton("tak", (dialogInterface, i) -> toDoViewModel.delete(toDoEventToDelete));
-        alertDialogBuilder.setNegativeButton("nie", (dialogInterface, i) -> {});
+        alertDialogBuilder.setTitle(getString(R.string.delete_request));
+        alertDialogBuilder.setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> toDoViewModel.delete(toDoEventToDelete));
         alertDialogBuilder.show();
     }
 }

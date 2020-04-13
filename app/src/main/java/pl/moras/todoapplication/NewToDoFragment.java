@@ -1,8 +1,7 @@
-package com.example.todoapplication;
+package pl.moras.todoapplication;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.annotation.TargetApi;
@@ -12,7 +11,6 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -21,19 +19,15 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.model.ToDoEvent;
-import com.example.viewmodel.ToDoViewModel;
+import pl.moras.model.ToDoEvent;
 
-import java.time.Instant;
+
+import pl.moras.viewmodel.ToDoViewModel;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalField;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class NewToDoFragment extends DialogFragment implements TimePicker.OnClickListener {
@@ -67,13 +61,14 @@ public class NewToDoFragment extends DialogFragment implements TimePicker.OnClic
                         endDateTime = LocalDateTime.of(date, time);
                         if(endDateTime.isBefore(LocalDateTime.now()))
                             Toast.makeText(getContext(), "Nie możesz ustawić czasu który już minął.", Toast.LENGTH_SHORT).show();
+                        else if (message.isEmpty())
+                            Toast.makeText(getContext(), "Nie podałeś żadnego zadania", Toast.LENGTH_LONG).show();
                         else {
                             ToDoEvent toDoEvent = new ToDoEvent();
                             toDoEvent.setOpis(message);
                             toDoEvent.setDatastart(LocalDateTime.now());
                             toDoEvent.setDatakoniec(endDateTime);
-
-                            ViewModelProviders.of(NewToDoFragment.this).get(ToDoViewModel.class).insert(toDoEvent);
+                            ViewModelProviders.of(requireActivity()).get(ToDoViewModel.class).insert(toDoEvent);
                         }
                     }
                 })

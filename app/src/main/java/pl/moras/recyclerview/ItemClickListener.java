@@ -1,6 +1,6 @@
-package com.example.recyclerview;
+package pl.moras.recyclerview;
 
-import com.example.model.ToDoEvent;
+import pl.moras.model.ToDoEvent;
 
 @FunctionalInterface
 public interface ItemClickListener {

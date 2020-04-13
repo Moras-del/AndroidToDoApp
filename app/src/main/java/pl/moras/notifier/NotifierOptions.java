@@ -1,9 +1,8 @@
-package com.example.notifier;
+package pl.moras.notifier;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkRequest;
 
 import java.util.UUID;

@@ -10,5 +10,23 @@
     <string name="days_week">Do tygodnia</string>
     <string name="days_two_weeks">Do dwóch tygodni</string>
     <string name="days_month">Do miesiąca</string>
+    <string name="delete_request">Usunąć?</string>
     <string name="delete_todo">Usuń</string>
+    <string name="yes">Tak</string>
+    <string name="cancel">Anuluj</string>
+    <string name="todo_start">Zaczęto: %s</string>
+    <string name="todo_end">Koniec: %s</string>
+    <string name="notifier_reminder_title">ToDoApp przypomnienie</string>
+    <string name="notfier_reminder_text">%1$s - zostało: %2$s</string>
+    
+    <plurals name="notifier_days">
+        <item quantity="one">%d dzień</item>
+        <item quantity="other">%d dni</item>
+    </plurals>
+    
+    <plurals name="notifier_hours">
+        <item quantity="one">%d godzina</item>
+        <item quantity="few">%d godziny</item>
+        <item quantity="many">%d godzin</item>
+    </plurals>
 </resources>

@@ -1,13 +1,11 @@
-package com.example.model;
+package pl.moras.model;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Dao

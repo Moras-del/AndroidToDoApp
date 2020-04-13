@@ -1,15 +1,11 @@
-package com.example.model;
+package pl.moras.model;
 
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 import androidx.room.TypeConverter;
 
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 
 public class Converter {
 

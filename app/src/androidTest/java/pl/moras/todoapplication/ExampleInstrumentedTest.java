@@ -1,19 +1,15 @@
-package com.example.todoapplication;
+package pl.moras.todoapplication;
 
 import android.content.Context;
 
 import androidx.room.Room;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
-import androidx.test.runner.AndroidJUnit4;
 
-import com.example.model.AppDatabase;
-import com.example.model.ToDoEvent;
-import com.example.model.ToDoEventDao;
+import pl.moras.model.AppDatabase;
+import pl.moras.model.ToDoEvent;
+import pl.moras.model.ToDoEventDao;
 
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

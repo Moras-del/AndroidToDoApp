@@ -1,18 +1,17 @@
-package com.example.recyclerview;
+package pl.moras.recyclerview;
 
-import android.annotation.TargetApi;
-import android.os.Build;
+import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.model.ToDoEvent;
-import com.example.todoapplication.R;
+import pl.moras.model.ToDoEvent;
+import pl.moras.todoapplication.R;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,11 +22,12 @@ import java.util.stream.Collectors;
 public class ToDoEventAdapter extends RecyclerView.Adapter<ToDoEventAdapter.MyViewHolder> {
     private final List<ToDoEvent> toDoEvents;
     private List<ToDoEvent> filtered; //filtered uzywany gdy wybiera sie przedzial czasowy zadan
-    private ItemClickListener itemClickListener; //listener z mainactivity
-
-    public ToDoEventAdapter(ItemClickListener itemClickListener){
+    private final ItemClickListener itemClickListener; //listener z mainactivity
+    private final Context context;
+    public ToDoEventAdapter(ItemClickListener itemClickListener, Context context){
         this.itemClickListener = itemClickListener;
         this.toDoEvents = new ArrayList<>();
+        this.context = context;
     }
 
     public void setTodos(List<ToDoEvent> todos){
@@ -37,21 +37,6 @@ public class ToDoEventAdapter extends RecyclerView.Adapter<ToDoEventAdapter.MyVi
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView description;
-        private TextView dateStart;
-        private TextView dateEnd;
-        private TextView deleteTask;
-        MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            deleteTask = itemView.findViewById(R.id.deleteTask);
-            description = itemView.findViewById(R.id.opis);
-            dateStart = itemView.findViewById(R.id.datastart);
-            dateEnd = itemView.findViewById(R.id.datakoniec);
-        }
-    }
-
     @NonNull
     @Override
     public ToDoEventAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -59,13 +44,12 @@ public class ToDoEventAdapter extends RecyclerView.Adapter<ToDoEventAdapter.MyVi
         return new MyViewHolder(v);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ToDoEventAdapter.MyViewHolder holder, int position) {
         ToDoEvent toDoEvent = toDoEvents.get(position);
         holder.description.setText(toDoEvent.getOpis());
-        holder.dateStart.setText("zaczęto: "+toDoEvent.getDatastart().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
-        holder.dateEnd.setText("Koniec: "+toDoEvent.getDatakoniec().format(DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm")));
+        holder.dateStart.setText(context.getString(R.string.todo_start, dateToString(toDoEvent.getDatastart(), "dd/MM/YYYY")));
+        holder.dateEnd.setText(context.getString(R.string.todo_end, dateToString(toDoEvent.getDatakoniec(), "dd/MM/YYYY HH:mm")));
         holder.deleteTask.setOnClickListener(view->itemClickListener.deleteItem(toDoEvent));
     }
 
@@ -75,9 +59,6 @@ public class ToDoEventAdapter extends RecyclerView.Adapter<ToDoEventAdapter.MyVi
 
     }
 
-
-    @TargetApi(Build.VERSION_CODES.O)
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void filterTodos(int days){
         filtered = toDoEvents
                 .stream()
@@ -91,5 +72,23 @@ public class ToDoEventAdapter extends RecyclerView.Adapter<ToDoEventAdapter.MyVi
         notifyDataSetChanged();
     }
 
+    private String dateToString(LocalDateTime date, String format){
+        return date.format(DateTimeFormatter.ofPattern(format));
+    }
 
+    class MyViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView description;
+        private TextView dateStart;
+        private TextView dateEnd;
+        private TextView deleteTask;
+        MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            deleteTask = itemView.findViewById(R.id.deleteTask);
+            deleteTask.setTextColor(Color.RED);
+            description = itemView.findViewById(R.id.opis);
+            dateStart = itemView.findViewById(R.id.datastart);
+            dateEnd = itemView.findViewById(R.id.datakoniec);
+        }
+    }
 }

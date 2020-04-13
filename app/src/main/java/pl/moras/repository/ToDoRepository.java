@@ -1,24 +1,15 @@
-package com.example.repository;
+package pl.moras.repository;
 
 import android.app.Application;
-import android.os.Build;
-import android.util.Log;
 
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 
-import com.example.model.AppDatabase;
-import com.example.model.ToDoEvent;
-import com.example.model.ToDoEventDao;
+import pl.moras.model.AppDatabase;
+import pl.moras.model.ToDoEvent;
+import pl.moras.model.ToDoEventDao;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Future;
-import java.util.stream.Collectors;
 
 public class ToDoRepository {
     private ToDoEventDao toDoEventDao;

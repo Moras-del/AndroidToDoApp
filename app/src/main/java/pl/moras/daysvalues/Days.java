@@ -1,12 +1,11 @@
-package com.example.daysvalues;
+package pl.moras.daysvalues;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.todoapplication.R;
+import pl.moras.todoapplication.R;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public enum Days {
