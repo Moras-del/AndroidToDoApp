@@ -27,6 +27,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class ExampleUnitTest {
 
     private static String[] filters = {"Wszystko", "Do 24 godzin", "Do trzech dni", "Do tygodnia", "Do dwóch tygodni", "Do miesiąca"};
+
     @Mock
     Context context;
 

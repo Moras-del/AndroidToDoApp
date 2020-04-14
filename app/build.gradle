@@ -38,7 +38,6 @@ dependencies {
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
-
     // Assertions
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.ext:truth:1.2.0'
@@ -47,7 +46,7 @@ dependencies {
 
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation "androidx.work:work-runtime:2.2.0"
+    implementation "androidx.work:work-runtime:2.3.4"
 
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 
@@ -56,13 +55,12 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.archLifecycleVersion"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.archLifecycleVersion"
 
     implementation "com.google.android.material:material:$rootProject.materialVersion"
 
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
 
-    implementation 'com.google.android.material:material:1.0.0'
 
 
 
