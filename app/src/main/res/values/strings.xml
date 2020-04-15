@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">ToDoApp</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="set_notifier_option">Przypominaj co godzine o najbliższych zadaniach</string>
     <string name="title_activity_to_do">ToDoActivity</string>
     <string name="title_activity_to_do_main">ToDoMain</string>
     <string name="days_all">Wszystko</string>
@@ -17,8 +16,18 @@
     <string name="todo_start">Zaczęto: %s</string>
     <string name="todo_end">Koniec: %s</string>
     <string name="notifier_reminder_title">ToDoApp przypomnienie</string>
-    <string name="notfier_reminder_text">%1$s - zostało: %2$s</string>
-    
+    <string name="notifier_reminder_text">%1$s - zostało: %2$s</string>
+    <string name="add_todo_button">Dodaj zadanie</string>
+    <string name="notifier_reminder_button">Przypominaj co godzine o najbliższym zadaniu</string>
+    <string name="new_todo_dialog_title">Nowe zadanie</string>
+    <string name="new_todo_bad_time">Nie możesz ustawić czasu który już minął</string>
+    <string name="new_todo_bad_text">Nie podałeś żadnego zadania</string>
+    <string name="new_todo_dialog_text">Treść zadania</string>
+    <string name="new_todo_dialog_confirm">Stwórz</string>
+    <string name="new_todo_dialog_date">Data zakończenia</string>
+    <string name="new_todo_dialog_time">Czas zakończenia</string>
+    <string name="deleted_todos_dialog_title">Upłynął czas wykonania tych zadań</string>
+    <string name="ok">OK</string>
     <plurals name="notifier_days">
         <item quantity="one">%d dzień</item>
         <item quantity="other">%d dni</item>
