@@ -8,10 +8,14 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import pl.moras.model.ToDoEvent;
+import pl.moras.notifier.NotifierOptions;
 import pl.moras.repository.ToDoRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ToDoViewModel extends AndroidViewModel {
@@ -40,12 +44,14 @@ public class ToDoViewModel extends AndroidViewModel {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void deleteOldTodos(){
         List<ToDoEvent> todosList = toDoRepository.getList();
-        List<Integer> idList = todosList.stream()
+        Set<ToDoEvent> deletedTodos = new HashSet<>();
+        todosList.stream()
                 .filter(toDoEvent -> toDoEvent.getDatakoniec().isBefore(LocalDateTime.now()))
-                .mapToInt(toDoEvent -> toDoEvent.getId().intValue())
-                .boxed()
-                .collect(Collectors.toList());
-        toDoRepository.deleteList(idList);
+                .forEach(toDoEvent -> {
+                    toDoRepository.delete(toDoEvent);
+                    deletedTodos.add(toDoEvent);
+                });
+        new NotifierOptions(getApplication()).cacheDeletedTodos(deletedTodos);
     }
 
 }

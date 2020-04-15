@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,13 +14,16 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Switch;
 
@@ -32,11 +36,19 @@ import pl.moras.recyclerview.ToDoEventAdapter;
 
 
 import pl.moras.viewmodel.ToDoViewModel;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.function.IntFunction;
+import java.util.stream.Collector;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -50,8 +62,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        notifierOptions = new NotifierOptions(this);
 
-        toDoViewModel = ViewModelProviders.of(this).get(ToDoViewModel.class);
+
+        toDoViewModel = new ViewModelProvider(this).get(ToDoViewModel.class);
         toDoViewModel.getToDoEventList().observe(this, observer);
         toDoViewModel.deleteOldTodos();
 
@@ -60,11 +74,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView =                       findViewById(R.id.recyclerView);
         Switch notifierSwitch =              findViewById(R.id.notifierswitch);
         spinner =                            findViewById(R.id.spinner);
-        FloatingActionButton newTodoButton = findViewById(R.id.newtodobutton);
+        Button newTodoButton = findViewById(R.id.newtodobutton);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinneritem, Days.getDays(this)));
+
+        if (!notifierOptions.getCachedDescriptionsSet().isEmpty()) { //show dialog with tasks which were deleted due to expiration
+            showDeletedTodos(notifierOptions.getCachedDescriptionsSet());
+            notifierOptions.removeCachedTodos();
+        }
 
         //otwórz kreator zadań
         newTodoButton.setOnClickListener(view -> {    // nowe zadanie
@@ -73,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             dialogFragment.show(fragmentManager, "newtodo");
         });
         
-        notifierOptions = new NotifierOptions(this);
+
         boolean isWorkerEnabled = notifierOptions.getNotifierState();
         notifierSwitch.setChecked(isWorkerEnabled);
         notifierSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> {
@@ -105,7 +124,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    private void showDeletedTodos(Set<String> descriptionsSet) {
+        String[] descriptions = descriptionsSet.toArray(new String[0]);
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(getString(R.string.deleted_todos_dialog_title))
+                .setItems(descriptions, (dialogInterface, i)->{})
+                .setPositiveButton(getText(R.string.ok), (dialogInterface, i) -> { })
+                .show();
     }
 
     private Observer<List<ToDoEvent>> observer = new Observer<List<ToDoEvent>>() {
@@ -122,9 +149,9 @@ public class MainActivity extends AppCompatActivity {
     private ItemClickListener itemClickListener = (this::deleteTodo);
 
     private void deleteTodo(ToDoEvent toDoEventToDelete){ //alertdialog z zapytaniem o usuniecie zadania
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-        alertDialogBuilder.setTitle(getString(R.string.delete_request));
-        alertDialogBuilder.setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> toDoViewModel.delete(toDoEventToDelete));
-        alertDialogBuilder.show();
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(getString(R.string.delete_request))
+                .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> toDoViewModel.delete(toDoEventToDelete))
+                .show();
     }
 }
