@@ -42,13 +42,10 @@ public class TodoDatabaseTests {
     @Test
     public void should_insert_todo() {
         ToDoEvent toDoEvent = getTodo();
-        ToDoEvent toDoEventFromDB;
-        List<ToDoEvent> list;
 
         toDoEventDao.insert(toDoEvent);
-        list = toDoEventDao.getList();
-        toDoEventFromDB = list.get(0);
-        assertEquals(toDoEvent.getOpis(), toDoEventFromDB.getOpis());
+        List<ToDoEvent> list = toDoEventDao.getList();
+        assertEquals(toDoEvent.getOpis(), list.get(0).getOpis());
     }
 
     @Test
@@ -58,9 +55,25 @@ public class TodoDatabaseTests {
 
         toDoEventDao.insert(toDoEvent);
         toDoEventDao.delete(toDoEvent);
+
         List<ToDoEvent> list = toDoEventDao.getList();
         assertTrue(list.isEmpty());
     }
+
+    @Test
+    public void should_get_list_ordered_by_enddate(){
+        ToDoEvent toDoEventNow = getTodo();
+        ToDoEvent toDoEventTomorrow = getTodo();
+        toDoEventNow.setDatakoniec(LocalDateTime.now());
+        toDoEventTomorrow.setDatakoniec(LocalDateTime.now().plusDays(1));
+
+        toDoEventDao.insert(toDoEventTomorrow);
+        toDoEventDao.insert(toDoEventNow);
+        List<ToDoEvent> list = toDoEventDao.getList();
+
+        assertTrue(list.get(0).getDatakoniec().isBefore(list.get(1).getDatakoniec()));
+    }
+
 
     ToDoEvent getTodo(){
         ToDoEvent toDoEvent = new ToDoEvent();

@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinneritem, Days.getDays(this)));
-
         if (!notifierOptions.getCachedDescriptionsSet().isEmpty()) { //show dialog with tasks which were deleted due to expiration
             showDeletedTodos(notifierOptions.getCachedDescriptionsSet());
             notifierOptions.removeCachedTodos();
