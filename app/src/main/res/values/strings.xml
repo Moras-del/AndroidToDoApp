@@ -37,4 +37,6 @@
     <string name="days_one">Up to 24 hours</string>
     <string name="new_todo_dialog_date">End date</string>
     <string name="filter_textview">Task filter</string>
+    <string name="app_id">APP_ID</string>
+    <string name="ad_unit_id">AD_UNIT_ID</string>
 </resources>

@@ -51,7 +51,7 @@ public class ToDoViewModel extends AndroidViewModel {
                     toDoRepository.delete(toDoEvent);
                     deletedTodos.add(toDoEvent);
                 });
-        new NotifierOptions(getApplication()).cacheDeletedTodos(deletedTodos);
+        NotifierOptions.cacheDeletedTodos(deletedTodos);
     }
 
 }

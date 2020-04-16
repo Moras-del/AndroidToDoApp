@@ -37,6 +37,9 @@ import pl.moras.recyclerview.ToDoEventAdapter;
 
 import pl.moras.viewmodel.ToDoViewModel;
 
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -52,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ToDoEventAdapter customAdapter;
     private ToDoViewModel toDoViewModel;
-    private NotifierOptions notifierOptions;
     private Spinner spinner;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        notifierOptions = new NotifierOptions(this);
+        NotifierOptions.initialize(this);
 
 
         toDoViewModel = new ViewModelProvider(this).get(ToDoViewModel.class);
@@ -77,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinneritem, Days.getDays(this)));
-        if (!notifierOptions.getCachedDescriptionsSet().isEmpty()) { //show dialog with tasks which were deleted due to expiration
-            showDeletedTodos(notifierOptions.getCachedDescriptionsSet());
-            notifierOptions.removeCachedTodos();
+        if (!NotifierOptions.getCachedDescriptionsSet().isEmpty()) { //show dialog with tasks which were deleted due to expiration
+            showDeletedTodos(NotifierOptions.getCachedDescriptionsSet());
+            NotifierOptions.removeCachedTodos();
         }
 
         //otwórz kreator zadań
@@ -90,17 +92,17 @@ public class MainActivity extends AppCompatActivity {
         });
         
 
-        boolean isWorkerEnabled = notifierOptions.getNotifierState();
+        boolean isWorkerEnabled = NotifierOptions.getNotifierState();
         notifierSwitch.setChecked(isWorkerEnabled);
         notifierSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             if (isChecked){
                 PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(NotifierWorker.class, 15, TimeUnit.MINUTES).build();
                 WorkManager.getInstance(getApplicationContext()).enqueue(periodicWorkRequest);
-                notifierOptions.saveWorkerId(periodicWorkRequest);
-                notifierOptions.saveNotifierState(true);
+                NotifierOptions.saveWorkerId(periodicWorkRequest);
+                NotifierOptions.saveNotifierState(true);
             } else {
-                WorkManager.getInstance(getApplicationContext()).cancelWorkById(notifierOptions.getWorkerId());
-                notifierOptions.saveNotifierState(false);
+                WorkManager.getInstance(getApplicationContext()).cancelWorkById(NotifierOptions.getWorkerId());
+                NotifierOptions.saveNotifierState(false);
             }
         });
 
@@ -121,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        MobileAds.initialize(this);
     }
 
     private void showDeletedTodos(Set<String> descriptionsSet) {

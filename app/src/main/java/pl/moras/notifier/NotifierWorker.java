@@ -83,7 +83,8 @@ public class NotifierWorker extends Worker {
             }
         }
         if (!deletedTodos.isEmpty())
-            new NotifierOptions(getApplicationContext()).cacheDeletedTodos(deletedTodos);
+            NotifierOptions.initialize(getApplicationContext());
+            NotifierOptions.cacheDeletedTodos(deletedTodos);
     }
 
     private String convertDate(LocalDateTime localDateTime){

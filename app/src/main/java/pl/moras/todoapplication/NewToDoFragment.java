@@ -21,6 +21,8 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -37,14 +39,19 @@ import java.time.temporal.TemporalField;
 import java.util.Calendar;
 
 public class NewToDoFragment extends DialogFragment {
-    private LocalDate localDate = LocalDate.now();
     private TextInputEditText dateText, timeText;
-
+    private LocalDate localDate = LocalDate.now();
+    private LocalTime localTime = LocalTime.now();
+    private InterstitialAd interstitialAd;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater factory = LayoutInflater.from(getActivity());
         View view = factory.inflate(R.layout.new_to_do_fragment, null);
+        interstitialAd = new InterstitialAd(getContext());
+        interstitialAd.setAdUnitId(getString(R.string.ad_unit_id));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+
         builder.setView(view);
         TextInputEditText descriptionText = view.findViewById(R.id.newtodotextinput);
         dateText = view.findViewById(R.id.newtododateinput);
@@ -54,10 +61,7 @@ public class NewToDoFragment extends DialogFragment {
         builder.setTitle(getString(R.string.new_todo_dialog_title))
                 .setPositiveButton(getString(R.string.new_todo_dialog_confirm), (dialog, id) -> {
                     String message = descriptionText.getText().toString();
-                    LocalDate endDate = LocalDate.parse(dateText.getText().toString());
-                    LocalTime endTime = LocalTime.parse(timeText.getText().toString());
-
-                    LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
+                    LocalDateTime endDateTime = LocalDateTime.of(localDate, localTime);
                     if(endDateTime.isBefore(LocalDateTime.now()))
                         Toast.makeText(getContext(), getString(R.string.new_todo_bad_time), Toast.LENGTH_SHORT).show();
                     else if (message.isEmpty())
@@ -68,6 +72,7 @@ public class NewToDoFragment extends DialogFragment {
                         toDoEvent.setDatastart(LocalDateTime.now());
                         toDoEvent.setDatakoniec(endDateTime);
                         new ViewModelProvider(requireActivity()).get(ToDoViewModel.class).insert(toDoEvent);
+                        interstitialAd.show();
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), (dialog, id) -> {
@@ -78,7 +83,8 @@ public class NewToDoFragment extends DialogFragment {
     private View.OnClickListener dateClickListener = (v)->{
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (datePicker, i, i1, i2) -> {
             datePicker.setMinDate(Calendar.getInstance().getTimeInMillis());
-            dateText.setText(LocalDate.of(i, i1+1, i2).toString());
+            localDate = LocalDate.of(i, i1+1, i2);
+            dateText.setText(localDate.toString());
         }, localDate.getYear(), localDate.getMonthValue()-1, localDate.getDayOfMonth());
 
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
@@ -87,8 +93,9 @@ public class NewToDoFragment extends DialogFragment {
 
     private View.OnClickListener timeClickListener = (v)->{
         new TimePickerDialog(getContext(), (timePicker, i, i1) -> {
-            timeText.setText(LocalTime.of(i, i1).toString());
-        }, 12, 0, true).show();
+            localTime = LocalTime.of(i, i1);
+            timeText.setText(localTime.toString());
+        }, localTime.getHour(), localTime.getMinute(), true).show();
     };
 
 

@@ -19,43 +19,43 @@ public class NotifierOptions {
     private static final String OPTION_NAME = "notifierenabled";
     private static final String WORKER_ID = "workerid";
     private static final String DELETED_TODOS = "deletedtodos";
-    private SharedPreferences sharedPreferences;
+    private static SharedPreferences sharedPreferences;
 
-    public NotifierOptions(Context context){
+    private NotifierOptions(){ }
+
+    public static void initialize(Context context){
         sharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 
-    
-
-    public boolean getNotifierState(){
+    public static boolean getNotifierState(){
         return sharedPreferences.getBoolean(OPTION_NAME, false);
     }
 
-    public void saveNotifierState(boolean state){
+    public static void saveNotifierState(boolean state){
         sharedPreferences.edit().putBoolean(OPTION_NAME, state).apply();
     }
 
-    public UUID getWorkerId(){
+    public static UUID getWorkerId(){
         String id = sharedPreferences.getString(WORKER_ID, null);
         return UUID.fromString(id);
     }
 
-    public void saveWorkerId(WorkRequest workRequest){
+    public static void saveWorkerId(WorkRequest workRequest){
         sharedPreferences.edit().putString(WORKER_ID, workRequest.getId().toString()).apply();
     }
 
-    public void cacheDeletedTodos(Set<ToDoEvent> toDoEventList){
+    public static void cacheDeletedTodos(Set<ToDoEvent> toDoEventList){
         Set<String> descriptionSet = sharedPreferences.getStringSet(DELETED_TODOS, new HashSet<>());
         for(ToDoEvent toDoEvent: toDoEventList)
             descriptionSet.add(toDoEvent.getOpis());
         sharedPreferences.edit().putStringSet(DELETED_TODOS, descriptionSet).apply();
     }
 
-    public Set<String> getCachedDescriptionsSet(){
+    public static Set<String> getCachedDescriptionsSet(){
         return sharedPreferences.getStringSet(DELETED_TODOS, new HashSet<>());
     }
 
-    public void removeCachedTodos(){
+    public static void removeCachedTodos(){
         sharedPreferences.edit().remove(DELETED_TODOS).apply();
     }
 

@@ -40,4 +40,6 @@
         <item quantity="many">%d godzin</item>
     </plurals>
     <string name="filter_textview">Filtrowanie zadań</string>
+    <string name="app_id">APP_ID</string>
+    <string name="ad_unit_id">AD_UNIT_ID</string>
 </resources>
