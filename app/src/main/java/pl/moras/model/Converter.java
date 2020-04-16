@@ -9,13 +9,11 @@ import java.time.LocalDateTime;
 
 public class Converter {
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @TypeConverter
     public static LocalDateTime fromStringToLocalDateTime(String value){
         return value==null? null : LocalDateTime.parse(value);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @TypeConverter
     public static String fromLocalDateTimeToString(LocalDateTime localDateTime){
         return localDateTime.toString();

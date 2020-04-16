@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ToDoApp</string>
+    <string name="title_activity_to_do">ToDoActivity</string>
+    <string name="title_activity_to_do_main">ToDoMain</string>
+    <string name="days_one">Do 24 godzin</string>
+    <string name="days_three">Do trzech dni</string>
+    <string name="days_week">Do tego tygodnia</string>
+    <string name="days_two_weeks">Do dwóch tygodni</string>
+    <string name="days_month">Do tego miesiąca</string>
+    <string name="delete_request">Usunąć?</string>
+    <string name="delete_todo">Usuń</string>
+    <string name="cancel">Anuluj</string>
+    <string name="todo_start">Zaczęto: %s</string>
+    <string name="todo_end">Koniec: %s</string>
+    <string name="notifier_reminder_title">ToDoApp przypomnienie</string>
+    <string name="notifier_reminder_text">%1$s - zostało: %2$s</string>
+    <string name="add_todo_button">Dodaj zadanie</string>
+    <string name="notifier_reminder_button">Przypominaj co godzinę o najbliższym zadaniu</string>
+    <string name="new_todo_dialog_title">Nowe zadanie</string>
+    <string name="new_todo_bad_time">Nie możesz ustawić czasu który już minął</string>
+    <string name="new_todo_bad_text">Nie podałeś treści zadania</string>
+    <string name="new_todo_dialog_text">Opis zadania</string>
+    <string name="new_todo_dialog_confirm">Create</string>
+    <string name="new_todo_dialog_date">Data zakończenia</string>
+    <string name="new_todo_dialog_time">Czas zakończenia</string>
+    <string name="deleted_todos_dialog_title">Upłynął czas wykonania tych zadań</string>
+    <string name="ok">OK</string>
+    <string name="days_all">Wszystko</string>
+    <string name="yes">Tak</string>
+    <plurals name="notifier_days">
+        <item quantity="one">%d dzień</item>
+        <item quantity="few">%d dni</item>
+        <item quantity="many">%d dni</item>
+    </plurals>
+
+    <plurals name="notifier_hours">
+        <item quantity="one">%d godzina</item>
+        <item quantity="few">%d godziny</item>
+        <item quantity="many">%d godzin</item>
+    </plurals>
+    <string name="filter_textview">Filtrowanie zadań</string>
+</resources>

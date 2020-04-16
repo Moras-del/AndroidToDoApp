@@ -25,6 +25,8 @@ public class NotifierOptions {
         sharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 
+    
+
     public boolean getNotifierState(){
         return sharedPreferences.getBoolean(OPTION_NAME, false);
     }

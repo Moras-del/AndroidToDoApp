@@ -47,8 +47,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.function.IntFunction;
-import java.util.stream.Collector;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;

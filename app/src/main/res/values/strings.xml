@@ -1,41 +1,40 @@
 <resources>
     <string name="app_name">ToDoApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_to_do">ToDoActivity</string>
     <string name="title_activity_to_do_main">ToDoMain</string>
-    <string name="days_all">Wszystko</string>
-    <string name="days_one">Do 24 godzin</string>
-    <string name="days_three">Do trzech dni</string>
-    <string name="days_week">Do tygodnia</string>
-    <string name="days_two_weeks">Do dwóch tygodni</string>
-    <string name="days_month">Do miesiąca</string>
-    <string name="delete_request">Usunąć?</string>
-    <string name="delete_todo">Usuń</string>
-    <string name="yes">Tak</string>
-    <string name="cancel">Anuluj</string>
-    <string name="todo_start">Zaczęto: %s</string>
-    <string name="todo_end">Koniec: %s</string>
-    <string name="notifier_reminder_title">ToDoApp przypomnienie</string>
-    <string name="notifier_reminder_text">%1$s - zostało: %2$s</string>
-    <string name="add_todo_button">Dodaj zadanie</string>
-    <string name="notifier_reminder_button">Przypominaj co godzine o najbliższym zadaniu</string>
-    <string name="new_todo_dialog_title">Nowe zadanie</string>
-    <string name="new_todo_bad_time">Nie możesz ustawić czasu który już minął</string>
-    <string name="new_todo_bad_text">Nie podałeś żadnego zadania</string>
-    <string name="new_todo_dialog_text">Treść zadania</string>
-    <string name="new_todo_dialog_confirm">Stwórz</string>
-    <string name="new_todo_dialog_date">Data zakończenia</string>
-    <string name="new_todo_dialog_time">Czas zakończenia</string>
-    <string name="deleted_todos_dialog_title">Upłynął czas wykonania tych zadań</string>
+    <string name="days_three">Up to three days</string>
+    <string name="days_week">Up to a week</string>
+    <string name="days_two_weeks">Up to two weeks</string>
+    <string name="days_month">Up to month</string>
+    <string name="delete_request">Delete?</string>
+    <string name="delete_todo">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="todo_start">Started: %s</string>
+    <string name="todo_end">End: %s</string>
+    <string name="notifier_reminder_title">ToDoApp reminder</string>
+    <string name="notifier_reminder_text">%1$s - time left: %2$s</string>
+    <string name="add_todo_button">Add task</string>
+    <string name="notifier_reminder_button">Remind me each hour about closest task</string>
+    <string name="new_todo_dialog_title">New task</string>
+    <string name="new_todo_bad_time">You can\'t set time that already passed</string>
+    <string name="new_todo_bad_text">You didn\'t provide task description</string>
+    <string name="new_todo_dialog_text">Task description</string>
+    <string name="new_todo_dialog_confirm">Create</string>
+    <string name="new_todo_dialog_time">Time of end date</string>
+    <string name="deleted_todos_dialog_title">The time to complete these tasks has expired</string>
     <string name="ok">OK</string>
     <plurals name="notifier_days">
-        <item quantity="one">%d dzień</item>
-        <item quantity="other">%d dni</item>
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
     </plurals>
-    
     <plurals name="notifier_hours">
-        <item quantity="one">%d godzina</item>
-        <item quantity="few">%d godziny</item>
-        <item quantity="many">%d godzin</item>
+        <item quantity="one">%d hour</item>
+        <item quantity="few">%d hours</item>
+        <item quantity="many">%d hours</item>
     </plurals>
+    <string name="days_all">All</string>
+    <string name="yes">Yes</string>
+    <string name="days_one">Up to 24 hours</string>
+    <string name="new_todo_dialog_date">End date</string>
+    <string name="filter_textview">Task filter</string>
 </resources>

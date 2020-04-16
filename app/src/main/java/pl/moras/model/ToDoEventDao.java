@@ -20,12 +20,9 @@ public interface ToDoEventDao {
     @Delete
     void delete(ToDoEvent toDoEvent);
 
-    @Query("SELECT * FROM todoevent ORDER BY datakoniec LIMIT 1")
-    ToDoEvent getFirst();
-
-    @Query("DELETE FROM todoevent WHERE id IN (:idList)")
-    void deleteList(List<Integer> idList);
-
     @Query("SELECT * FROM todoevent ORDER BY datakoniec")
     List<ToDoEvent> getList();
+
+    @Query("SELECT * FROM todoevent ORDER BY datakoniec LIMIT 1")
+    ToDoEvent getFirstTodo();
 }

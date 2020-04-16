@@ -8,6 +8,7 @@ import pl.moras.model.AppDatabase;
 import pl.moras.model.ToDoEvent;
 import pl.moras.model.ToDoEventDao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -33,18 +34,11 @@ public class ToDoRepository {
         AppDatabase.dbExecutor.execute(() -> toDoEventDao.delete(toDoEvent));
     }
 
-    public void deleteList(final List<Integer> idList){
-        AppDatabase.dbExecutor.execute(() -> toDoEventDao.deleteList(idList));
-    }
-
     public List<ToDoEvent> getList(){
         try {
             return AppDatabase.dbExecutor.submit(()->toDoEventDao.getList()).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (ExecutionException | InterruptedException e) {
+            return new ArrayList<>();
         }
-        return null;
     }
 }

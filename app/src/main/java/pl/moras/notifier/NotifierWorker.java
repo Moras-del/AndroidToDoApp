@@ -46,10 +46,12 @@ public class NotifierWorker extends Worker {
         ToDoEventDao toDoEventDao = AppDatabase.getDBInstance(getApplicationContext()).toDoEventDao();
         List<ToDoEvent> toDoEventList = toDoEventDao.getList();
         deleteOldTodos(toDoEventDao, toDoEventList);
-        ToDoEvent firstTodo = toDoEventList.get(0);
-        enableChannel();
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-        notificationManagerCompat.notify(NOTIFICATION_ID, notifier(firstTodo));
+        ToDoEvent firstTodo = toDoEventDao.getFirstTodo();
+        if (firstTodo!=null) {
+            enableChannel();
+            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+            notificationManagerCompat.notify(NOTIFICATION_ID, notifier(firstTodo));
+        }
         return Result.success();
     }
 
@@ -64,7 +66,7 @@ public class NotifierWorker extends Worker {
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.options_button)
+                .setSmallIcon(R.drawable.ic_launcher)
                 .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 1, intent, PendingIntent.FLAG_UPDATE_CURRENT))
                 .setContentTitle(getApplicationContext().getString(R.string.notifier_reminder_title))
                 .setContentText(getApplicationContext().getString(R.string.notifier_reminder_text, toDoEvent.getOpis(), convertDate(toDoEvent.getDatakoniec())))
@@ -78,7 +80,6 @@ public class NotifierWorker extends Worker {
             if (toDoEvent.getDatakoniec().isBefore(LocalDateTime.now())){
                 deletedTodos.add(toDoEvent);
                 toDoEventDao.delete(toDoEvent);
-                list.remove(toDoEvent);
             }
         }
         if (!deletedTodos.isEmpty())
