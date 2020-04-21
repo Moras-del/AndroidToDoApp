@@ -80,6 +80,7 @@ public class NewToDoFragment extends DialogFragment {
         return builder.create();
     }
 
+
     private View.OnClickListener dateClickListener = (v)->{
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (datePicker, i, i1, i2) -> {
             datePicker.setMinDate(Calendar.getInstance().getTimeInMillis());

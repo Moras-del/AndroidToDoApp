@@ -6,19 +6,15 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
 
 import android.widget.AdapterView;
@@ -26,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import pl.moras.daysvalues.Days;
 import pl.moras.model.ToDoEvent;
@@ -37,16 +34,12 @@ import pl.moras.recyclerview.ToDoEventAdapter;
 
 import pl.moras.viewmodel.ToDoViewModel;
 
+import com.codemybrainsout.ratingdialog.RatingDialog;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.material.button.MaterialButton;
+
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -56,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private ToDoEventAdapter customAdapter;
     private ToDoViewModel toDoViewModel;
     private Spinner spinner;
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         notifierSwitch.setChecked(isWorkerEnabled);
         notifierSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             if (isChecked){
-                PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(NotifierWorker.class, 15, TimeUnit.MINUTES).build();
+                PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(NotifierWorker.class, 1, TimeUnit.HOURS).build();
                 WorkManager.getInstance(getApplicationContext()).enqueue(periodicWorkRequest);
                 NotifierOptions.saveWorkerId(periodicWorkRequest);
                 NotifierOptions.saveNotifierState(true);
@@ -124,7 +115,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         MobileAds.initialize(this);
+        initRateRequest();
     }
+    private void initRateRequest() {
+        new RatingDialog.Builder(this)
+                .title(getString(R.string.rate_message))
+                .negativeButtonText(getString(R.string.rate_never))
+                .positiveButtonText(getString(R.string.rate_later))
+                .session(7)
+                .build()
+                .show();
+    }
+
 
     private void showDeletedTodos(Set<String> descriptionsSet) {
         String[] descriptions = descriptionsSet.toArray(new String[0]);
@@ -154,4 +156,6 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> toDoViewModel.delete(toDoEventToDelete))
                 .show();
     }
+
+
 }

@@ -4,5 +4,5 @@ import pl.moras.model.ToDoEvent;
 
 @FunctionalInterface
 public interface ItemClickListener {
-    void deleteItem(ToDoEvent toDoEvent);
+    void onTodoClick(ToDoEvent toDoEvent);
 }

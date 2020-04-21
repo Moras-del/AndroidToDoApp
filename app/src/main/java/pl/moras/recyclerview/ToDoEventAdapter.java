@@ -50,7 +50,7 @@ public class ToDoEventAdapter extends RecyclerView.Adapter<ToDoEventAdapter.MyVi
         holder.description.setText(toDoEvent.getOpis());
         holder.dateStart.setText(context.getString(R.string.todo_start, dateToString(toDoEvent.getDatastart(), "dd/MM/YYYY")));
         holder.dateEnd.setText(context.getString(R.string.todo_end, dateToString(toDoEvent.getDatakoniec(), "dd/MM/YYYY HH:mm")));
-        holder.deleteTask.setOnClickListener(view->itemClickListener.deleteItem(toDoEvent));
+        holder.deleteTask.setOnClickListener(view->itemClickListener.onTodoClick(toDoEvent));
     }
 
     @Override
