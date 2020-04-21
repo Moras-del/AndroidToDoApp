@@ -40,7 +40,7 @@
         <item quantity="many">%d godzin</item>
     </plurals>
     <string name="filter_textview">Filtrowanie zadań</string>
-    <string name="app_id">ca-app-pub-4765771674447493~2711878650</string>
+    <string name="app_id">APP_ID</string>
     <string name="ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
     <string name="rate_message">Proszę oceń moją aplikację jeśli ci się podoba!</string>
     <string name="rate_never">Nigdy</string>

@@ -41,7 +41,6 @@ public class ToDoViewModel extends AndroidViewModel {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void deleteOldTodos(){
         List<ToDoEvent> todosList = toDoRepository.getList();
         Set<ToDoEvent> deletedTodos = new HashSet<>();

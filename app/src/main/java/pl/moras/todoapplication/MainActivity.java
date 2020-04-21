@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private ToDoEventAdapter customAdapter;
     private ToDoViewModel toDoViewModel;
     private Spinner spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
